@@ -2,7 +2,7 @@
 
 A RESTful API backend system for a blog management platform with user authentication, role-based access control, and automatic blog summarization.
 
-## 🚀 Features
+## Features
 
 - **User Authentication** - JWT-based authentication system
 - **Role-Based Access Control** - ADMIN and USER roles with different permissions
@@ -13,7 +13,7 @@ A RESTful API backend system for a blog management platform with user authentica
 - **Database ORM** - Sequelize for MySQL database management
 - **Containerization** - Docker and Docker Compose support
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Runtime**: Node.js (v22.20.0)
 - **Framework**: Express.js
@@ -24,7 +24,7 @@ A RESTful API backend system for a blog management platform with user authentica
 - **Containerization**: Docker & Docker Compose
 - **Development**: Nodemon
 
-## 📋 Prerequisites
+##  Prerequisites
 
 ### For Local Development:
 - Node.js (v18 or higher)
@@ -35,7 +35,7 @@ A RESTful API backend system for a blog management platform with user authentica
 - Docker Desktop
 - Docker Compose
 
-## 🔧 Installation & Setup
+##  Installation & Setup
 
 ### Option 1: Local Development Setup
 
@@ -124,7 +124,7 @@ The API will be available at:
 - **App**: `http://localhost:3000`
 - **MySQL**: `localhost:3307` (mapped from container port 3306)
 
-## 📊 Database Schema
+##  Database Schema
 
 **Complete SQL Schema:** See [`schema.sql`](schema.sql) for the full database schema file.
 
@@ -177,7 +177,7 @@ CREATE TABLE blogs (
 - One User can have Many Blogs (One-to-Many)
 - Cascade delete: When a user is deleted, all their blogs are deleted
 
-## 🔐 Environment Variables
+##  Environment Variables
 
 Create a `.env` file in the root directory:
 
@@ -198,7 +198,7 @@ JWT_SECRET=your_super_secret_jwt_key_here
 - `DB_NAME`: Database name
 - `JWT_SECRET`: Secret key for JWT token signing
 
-## 📚 API Documentation
+##  API Documentation
 
 Base URL: `http://localhost:3000`
 
@@ -559,7 +559,7 @@ All endpoints may return the following error responses:
 }
 ```
 
-## 🗂️ Project Structure
+##  Project Structure
 
 ```
 blog-management-backend/
@@ -600,7 +600,7 @@ blog-management-backend/
 └── README.md                    # This file
 ```
 
-## 🧪 Testing the API
+##  Testing the API
 
 ### Using cURL:
 
@@ -655,12 +655,12 @@ curl http://localhost:3000/blogs?page=1&limit=10
 5. Start testing!
 
 **Features:**
-- ✅ All 9 API endpoints pre-configured
-- ✅ Automatic token management (auto-saves after login)
-- ✅ Automated test scripts for validation
-- ✅ Environment variables for easy switching
-- ✅ Organized into folders (Auth, Users, Blogs)
-- ✅ Sample requests with realistic data
+-  All 9 API endpoints pre-configured
+-  Automatic token management (auto-saves after login)
+-  Automated test scripts for validation
+-  Environment variables for easy switching
+-  Organized into folders (Auth, Users, Blogs)
+-  Sample requests with realistic data
 
 **Quick Start:**
 1. Run **"Register User"** or **"Login"** → Token auto-saved
@@ -669,7 +669,7 @@ curl http://localhost:3000/blogs?page=1&limit=10
 
 **Documentation:** See [`POSTMAN_GUIDE.md`](POSTMAN_GUIDE.md) for detailed usage instructions.
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Docker Issues
 
@@ -725,7 +725,7 @@ npm install
 PORT=3001
 ```
 
-## 📝 Development Notes
+##  Development Notes
 
 ### Auto-Summarization Logic
 
@@ -757,30 +757,30 @@ This creates tables if they don't exist and updates columns if schema changes.
 
 **Note:** Use migrations in production!
 
-## 📦 Deployment
+##  Deployment
 
 ### Production Checklist:
 
-1. ✅ Set strong `JWT_SECRET`
-2. ✅ Use strong MySQL password
-3. ✅ Set `NODE_ENV=production`
-4. ✅ Use environment variables (not .env file)
-5. ✅ Enable HTTPS/SSL
-6. ✅ Set up proper logging
-7. ✅ Configure CORS if needed
-8. ✅ Use database migrations instead of sync
-9. ✅ Set up automated backups
-10. ✅ Configure rate limiting
+1.  Set strong `JWT_SECRET`
+2.  Use strong MySQL password
+3.  Set `NODE_ENV=production`
+4.  Use environment variables (not .env file)
+5.  Enable HTTPS/SSL
+6.  Set up proper logging
+7.  Configure CORS if needed
+8.  Use database migrations instead of sync
+9.  Set up automated backups
+10. Configure rate limiting
 
-## 👨‍💻 Author
+##  Author
 
 **Dinusha Herath**
 - GitHub: [@DinushaHerath](https://github.com/DinushaHerath)
 
-## 📄 License
+## License
 
 ISC
 
-## 🙏 Acknowledgments
+##  Acknowledgments
 
 Technical Assignment for Decryptogen - Blog Management Platform Backend System

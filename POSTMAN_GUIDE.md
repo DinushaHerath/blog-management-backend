@@ -1,11 +1,11 @@
 # Postman Collection Guide
 
-## 📦 Files Included
+##  Files Included
 
 1. **`Blog_Management_API.postman_collection.json`** - Complete API collection with all endpoints
 2. **`Blog_Management_Local.postman_environment.json`** - Environment variables for local development
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Step 1: Import Collection
 
@@ -35,21 +35,21 @@ docker-compose up
 
 Server should be running on `http://localhost:3000`
 
-## 📚 Collection Structure
+##  Collection Structure
 
 The collection is organized into 3 folders:
 
-### 1️⃣ Authentication (4 requests)
+### 1️. Authentication (4 requests)
 - **Register User** - Create a regular user account
 - **Register Admin User** - Create an admin account
 - **Login** - Authenticate as regular user
 - **Login as Admin** - Authenticate as admin
 
-### 2️⃣ Users (2 requests)
+### 2️. Users (2 requests)
 - **Get All Users** - List all users (Admin only)
 - **Get User by ID** - Get specific user details (Protected)
 
-### 3️⃣ Blogs (6 requests)
+### 3️. Blogs (6 requests)
 - **Create Blog** - Create new blog post (Authenticated)
 - **Get All Blogs (No Pagination)** - Get blogs with default pagination
 - **Get All Blogs (With Pagination)** - Custom pagination example
@@ -57,7 +57,7 @@ The collection is organized into 3 folders:
 - **Update Blog** - Update existing blog (Owner/Admin)
 - **Delete Blog** - Delete blog (Admin only)
 
-## 🔄 Automated Workflows
+##  Automated Workflows
 
 The collection includes automated test scripts that:
 
@@ -72,7 +72,7 @@ The collection includes automated test scripts that:
 - Validates data types
 - Tests business logic
 
-## 📖 Usage Flow
+##  Usage Flow
 
 ### Scenario 1: Regular User Workflow
 
@@ -126,7 +126,7 @@ The collection includes automated test scripts that:
    └─> Verify pagination response
 ```
 
-## 🔐 Environment Variables
+##  Environment Variables
 
 The environment includes these variables:
 
@@ -140,7 +140,7 @@ The environment includes these variables:
 
 **Note:** Variables marked "Auto-set" are automatically populated by test scripts.
 
-## ✅ Test Scripts
+##  Test Scripts
 
 Each request includes automated tests:
 
@@ -166,7 +166,7 @@ After running a request:
 2. See which tests passed/failed
 3. View console logs for saved variables
 
-## 🧪 Manual Testing Steps
+##  Manual Testing Steps
 
 ### Test 1: User Registration & Authentication
 ```
@@ -225,7 +225,7 @@ After running a request:
    ✓ Status: 200 (Success)
 ```
 
-## 🔧 Troubleshooting
+##  Troubleshooting
 
 ### Issue: "No token provided"
 **Solution:** Make sure you've logged in first. The token is auto-saved after successful login.
@@ -251,7 +251,7 @@ After running a request:
 ### Issue: Blog not found (404)
 **Solution:** Make sure `blog_id` variable is set. Run "Create Blog" first.
 
-## 🌐 Testing with Docker
+##  Testing with Docker
 
 If using Docker Compose:
 
@@ -268,7 +268,7 @@ curl http://localhost:3000
 
 **Note:** Make sure to use port **3000** (not 3307 which is MySQL).
 
-## 📊 Testing Checklist
+##  Testing Checklist
 
 Use this checklist to verify all functionality:
 
@@ -301,7 +301,7 @@ Use this checklist to verify all functionality:
 - [ ] Admin can delete any blog
 - [ ] Non-admin cannot delete blog (403)
 
-## 📝 Sample Data
+##  Sample Data
 
 The collection includes realistic sample data:
 
@@ -333,7 +333,7 @@ The collection includes realistic sample data:
 }
 ```
 
-## 🎯 Advanced Usage
+##  Advanced Usage
 
 ### Using Collection Runner
 
@@ -360,26 +360,41 @@ Create additional environments for:
 
 Just change the `base_url` variable!
 
-## 📸 Screenshots for Documentation
+##  Screenshots for Documentation
 
-Recommended screenshots for assignment:
+1. **Imported Collection** -
+![ Show folder structure](screenshots/0-imported_ollection.png)
 
-1. **Imported Collection** - Show folder structure
-2. **Successful Login** - Show token in response
-3. **Create Blog** - Show auto-summary generation
-4. **Pagination** - Show page/limit working
-5. **Admin Access** - Show Get All Users (admin)
-6. **Access Denied** - Show 403 for regular user
-7. **Test Results** - Show passing tests
-8. **Environment Variables** - Show auto-saved values
+2. **Successful Login** -
+![Register a Regular User](screenshots/01-imported-collection.png.png)
+![Login as Regular User](screenshots/02-login-success-token.png)
 
-## 📚 Additional Resources
+3. **Create Blog** - 
+![Create a Blog (Auto-Summary)](screenshots/03-create-blog-summary.png)
+
+4. **Pagination** - 
+![Get All Blogs (No Pagination)](screenshots/04-pagination-working_1.png)
+![Pagination Test](screenshots/05-admin-get-allusers.png)
+
+5. **Admin Access** -
+![ Show Get All Users (admin)](screenshots/06-access-denied-403.png)
+
+6. **Access Denied** - 
+![Show 403 for regular user](screenshots/07-postman-tests-passed.png)
+
+7. **Test Results** - 
+![Show passing tests](screenshots/07-postman-tests-passed.png)
+
+8. **Environment Variables** - 
+![Show auto-saved values](screenshots/08-environment-variables.png)
+
+##  Additional Resources
 
 - [Postman Documentation](https://learning.postman.com/docs/)
 - [Postman Test Scripts](https://learning.postman.com/docs/writing-scripts/test-scripts/)
 - [Environment Variables](https://learning.postman.com/docs/sending-requests/variables/)
 
-## 🆘 Support
+##  Support
 
 If you encounter issues:
 
@@ -389,20 +404,20 @@ If you encounter issues:
 4. Retry login to refresh token
 5. Check API endpoint in README.md
 
-## ✨ Features Demonstrated
+##  Features Demonstrated
 
 This collection showcases:
 
-✅ **JWT Authentication** - Token-based auth  
-✅ **Role-Based Access Control** - Admin vs User permissions  
-✅ **CRUD Operations** - Complete blog management  
-✅ **Pagination** - Query parameters for large datasets  
-✅ **Auto-Summarization** - Content processing logic  
-✅ **Relationship Management** - User-Blog associations  
-✅ **Automated Testing** - Test scripts for validation  
-✅ **Environment Variables** - Dynamic value management  
-✅ **Error Handling** - Proper HTTP status codes  
-✅ **Security** - Password hashing, protected routes  
+ **JWT Authentication** - Token-based auth  
+ **Role-Based Access Control** - Admin vs User permissions  
+ **CRUD Operations** - Complete blog management  
+ **Pagination** - Query parameters for large datasets  
+ **Auto-Summarization** - Content processing logic  
+ **Relationship Management** - User-Blog associations  
+ **Automated Testing** - Test scripts for validation  
+ **Environment Variables** - Dynamic value management  
+ **Error Handling** - Proper HTTP status codes  
+ **Security** - Password hashing, protected routes  
 
 ---
 
