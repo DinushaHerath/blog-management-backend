@@ -1,6 +1,9 @@
 const express = require("express");
 require("dotenv").config();
 const authRoutes = require("./routes/auth.routes");
+const userRoutes = require("./routes/user.routes");
+const blogRoutes = require("./routes/blog.routes");
+
 
 
 const User = require("./models/User");
@@ -20,6 +23,9 @@ const app = express();
 app.use(express.json());
 
 app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/blogs", blogRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("API is running");
