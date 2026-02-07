@@ -1,6 +1,14 @@
 const express = require("express");
 require("dotenv").config();
 
+const sequelize = require("./config/database");
+
+// Test connection
+sequelize.authenticate()
+  .then(() => console.log("✅ MySQL connected successfully"))
+  .catch(err => console.error("❌ MySQL connection failed:", err));
+
+
 const app = express();
 app.use(express.json());
 
