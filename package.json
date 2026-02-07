@@ -1,8 +1,8 @@
 {
   "name": "blog-management-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Professional blog management platform backend with JWT authentication, role-based access control, and auto-summarization",
+  "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js"
@@ -11,8 +11,17 @@
     "type": "git",
     "url": "git+https://github.com/DinushaHerath/blog-management-backend.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "blog",
+    "api",
+    "express",
+    "mysql",
+    "jwt",
+    "authentication",
+    "rest-api",
+    "nodejs"
+  ],
+  "author": "Dinusha Herath",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
@@ -23,9 +32,12 @@
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.4",
     "express": "^5.2.1",
+    "express-validator": "^7.3.1",
     "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.10.1",
     "mysql2": "^3.16.3",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

@@ -593,6 +593,9 @@ blog-management-backend/
 ├── DATABASE_SETUP.md            # Database setup guide
 ├── DOCKER_SETUP.md              # Docker setup guide
 ├── DOCKER_TROUBLESHOOTING.md    # Docker troubleshooting
+├── POSTMAN_GUIDE.md             # Postman collection usage guide
+├── Blog_Management_API.postman_collection.json      # Postman collection
+├── Blog_Management_Local.postman_environment.json   # Postman environment
 ├── package.json                 # Dependencies and scripts
 └── README.md                    # This file
 ```
@@ -639,9 +642,32 @@ curl -X POST http://localhost:3000/blogs \
 curl http://localhost:3000/blogs?page=1&limit=10
 ```
 
-### Using Postman:
+### Using Postman (Recommended):
 
-Import the provided Postman collection for pre-configured API tests.
+**Import the Collection:**
+
+1. Open Postman
+2. Click **Import** button
+3. Import these files:
+   - `Blog_Management_API.postman_collection.json`
+   - `Blog_Management_Local.postman_environment.json`
+4. Select **"Blog Management - Local"** environment (top right)
+5. Start testing!
+
+**Features:**
+- ✅ All 9 API endpoints pre-configured
+- ✅ Automatic token management (auto-saves after login)
+- ✅ Automated test scripts for validation
+- ✅ Environment variables for easy switching
+- ✅ Organized into folders (Auth, Users, Blogs)
+- ✅ Sample requests with realistic data
+
+**Quick Start:**
+1. Run **"Register User"** or **"Login"** → Token auto-saved
+2. Run **"Create Blog"** → Blog ID auto-saved
+3. All other protected endpoints work automatically!
+
+**Documentation:** See [`POSTMAN_GUIDE.md`](POSTMAN_GUIDE.md) for detailed usage instructions.
 
 ## 🐛 Troubleshooting
 

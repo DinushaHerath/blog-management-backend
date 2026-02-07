@@ -1,0 +1,581 @@
+{
+	"info": {
+		"_postman_id": "blog-management-api-2026",
+		"name": "Blog Management Platform API",
+		"description": "Complete API collection for Blog Management Platform with authentication, user management, and blog CRUD operations.\n\n**Author:** Dinusha Herath\n**Date:** February 7, 2026\n**Assignment:** Decryptogen Technical Assessment\n\n## Features:\n- JWT Authentication\n- Role-based access control (ADMIN/USER)\n- Blog CRUD operations\n- Auto-summarization\n- Pagination support\n\n## Usage:\n1. Register a user or login\n2. Copy the token from response\n3. Token is auto-saved to environment variable\n4. Protected endpoints automatically use the token\n\n## Environment Variables:\n- `base_url`: http://localhost:3000\n- `token`: Auto-set after login\n- `user_id`: Auto-set after registration/login\n- `blog_id`: Auto-set after creating a blog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.user && response.user.id) {",
+									"        pm.environment.set(\"user_id\", response.user.id);",
+									"        console.log(\"User ID saved:\", response.user.id);",
+									"    }",
+									"    pm.test(\"User registered successfully\", function() {",
+									"        pm.expect(response.message).to.include(\"registered\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"USER\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user account.\n\n**Request Body:**\n- `name` (required): User's full name\n- `email` (required): Unique email address\n- `password` (required): Password (will be hashed)\n- `role` (optional): \"USER\" or \"ADMIN\" (default: \"USER\")\n\n**Response:**\n- 201: User created successfully\n- 400: Email already registered\n- 500: Server error"
+					},
+					"response": []
+				},
+				{
+					"name": "Register Admin User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    pm.test(\"Admin user registered successfully\", function() {",
+									"        pm.expect(response.user.role).to.eql(\"ADMIN\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Admin User\",\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin123\",\n    \"role\": \"ADMIN\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register an admin user with elevated privileges."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.token) {",
+									"        pm.environment.set(\"token\", response.token);",
+									"        console.log(\"Token saved:\", response.token);",
+									"    }",
+									"    if (response.user && response.user.id) {",
+									"        pm.environment.set(\"user_id\", response.user.id);",
+									"        console.log(\"User ID saved:\", response.user.id);",
+									"    }",
+									"    pm.test(\"Login successful\", function() {",
+									"        pm.expect(response).to.have.property(\"token\");",
+									"        pm.expect(response).to.have.property(\"user\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Authenticate user and receive JWT token.\n\n**Request Body:**\n- `email` (required): User's email\n- `password` (required): User's password\n\n**Response:**\n- 200: Login successful with token\n- 400: Invalid credentials\n- 500: Server error\n\n**Note:** Token is automatically saved to environment variable and used in subsequent requests."
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.token) {",
+									"        pm.environment.set(\"token\", response.token);",
+									"        pm.environment.set(\"admin_token\", response.token);",
+									"        console.log(\"Admin token saved\");",
+									"    }",
+									"    pm.test(\"Admin login successful\", function() {",
+									"        pm.expect(response.user.role).to.eql(\"ADMIN\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login as admin to access admin-only endpoints."
+					},
+					"response": []
+				}
+			],
+			"description": "User authentication endpoints for registration and login."
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users (Admin Only)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.test(\"Users retrieved successfully\", function() {",
+									"        pm.expect(response).to.be.an(\"array\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "Get list of all users (Admin only).\n\n**Headers:**\n- Authorization: Bearer {token}\n\n**Access:** Admin only\n\n**Response:**\n- 200: List of users\n- 401: Unauthorized (no token)\n- 403: Forbidden (not admin)\n- 500: Server error"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.test(\"User details retrieved\", function() {",
+									"        pm.expect(response).to.have.property(\"id\");",
+									"        pm.expect(response).to.have.property(\"email\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						},
+						"description": "Get specific user details.\n\n**Headers:**\n- Authorization: Bearer {token}\n\n**Access:** Admin or the user themselves\n\n**Response:**\n- 200: User details\n- 401: Unauthorized\n- 403: Forbidden (not admin and not self)\n- 404: User not found\n- 500: Server error"
+					},
+					"response": []
+				}
+			],
+			"description": "User management endpoints."
+		},
+		{
+			"name": "Blogs",
+			"item": [
+				{
+					"name": "Create Blog",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.id) {",
+									"        pm.environment.set(\"blog_id\", response.id);",
+									"        console.log(\"Blog ID saved:\", response.id);",
+									"    }",
+									"    pm.test(\"Blog created successfully\", function() {",
+									"        pm.expect(response).to.have.property(\"id\");",
+									"        pm.expect(response).to.have.property(\"summary\");",
+									"    });",
+									"    pm.test(\"Summary auto-generated\", function() {",
+									"        pm.expect(response.summary).to.not.be.empty;",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Getting Started with Node.js\",\n    \"content\": \"Node.js is a powerful JavaScript runtime built on Chrome's V8 JavaScript engine. It allows developers to build scalable network applications using JavaScript on the server side. In this comprehensive guide, we will explore the fundamentals of Node.js, understand its event-driven architecture, and learn how to build your first web application. We'll cover essential topics including npm package management, Express.js framework, asynchronous programming, and best practices for production deployment.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/blogs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blogs"
+							]
+						},
+						"description": "Create a new blog post (Authenticated users).\n\n**Headers:**\n- Authorization: Bearer {token}\n- Content-Type: application/json\n\n**Request Body:**\n- `title` (required): Blog title\n- `content` (required): Full blog content\n\n**Response:**\n- 201: Blog created (summary auto-generated)\n- 401: Unauthorized\n- 500: Server error\n\n**Note:** Summary is automatically generated from first 200 characters."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Blogs (No Pagination)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.test(\"Blogs retrieved successfully\", function() {",
+									"        pm.expect(response).to.have.property(\"blogs\");",
+									"        pm.expect(response).to.have.property(\"total\");",
+									"        pm.expect(response).to.have.property(\"page\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/blogs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blogs"
+							]
+						},
+						"description": "Get all blogs with default pagination (page 1, limit 10).\n\n**Access:** Public\n\n**Response:**\n- 200: Paginated blog list with author info\n- 500: Server error"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Blogs (With Pagination)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.test(\"Pagination working\", function() {",
+									"        pm.expect(response.page).to.eql(2);",
+									"        pm.expect(response.blogs.length).to.be.at.most(5);",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/blogs?page=2&limit=5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blogs"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "limit",
+									"value": "5",
+									"description": "Results per page (default: 10)"
+								}
+							]
+						},
+						"description": "Get blogs with custom pagination.\n\n**Query Parameters:**\n- `page` (optional): Page number (default: 1)\n- `limit` (optional): Results per page (default: 10)\n\n**Access:** Public\n\n**Response:**\n- Ordered by created_at (newest first)\n- Includes author information\n- Returns total count and total pages"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Blog by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.test(\"Blog details retrieved\", function() {",
+									"        pm.expect(response).to.have.property(\"id\");",
+									"        pm.expect(response).to.have.property(\"title\");",
+									"        pm.expect(response).to.have.property(\"User\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/blogs/{{blog_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blogs",
+								"{{blog_id}}"
+							]
+						},
+						"description": "Get specific blog post details.\n\n**Access:** Public\n\n**Response:**\n- 200: Blog details with author info\n- 404: Blog not found\n- 500: Server error"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Blog (Owner/Admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.test(\"Blog updated successfully\", function() {",
+									"        pm.expect(response).to.have.property(\"title\");",
+									"        pm.expect(response.title).to.include(\"Updated\");",
+									"    });",
+									"    pm.test(\"Summary regenerated\", function() {",
+									"        pm.expect(response.summary).to.not.be.empty;",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated: Advanced Node.js Concepts\",\n    \"content\": \"This updated guide covers advanced Node.js concepts including streams, buffers, event emitters, and cluster modules. Learn how to optimize your Node.js applications for production, implement microservices architecture, and master asynchronous patterns. We'll also explore performance tuning, memory management, and security best practices for enterprise-level applications.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/blogs/{{blog_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blogs",
+								"{{blog_id}}"
+							]
+						},
+						"description": "Update existing blog post (Owner or Admin only).\n\n**Headers:**\n- Authorization: Bearer {token}\n- Content-Type: application/json\n\n**Request Body:**\n- `title` (optional): New title\n- `content` (optional): New content\n\n**Access:** Blog owner or Admin\n\n**Response:**\n- 200: Blog updated (summary regenerated if content changed)\n- 401: Unauthorized\n- 403: Forbidden (not owner and not admin)\n- 404: Blog not found\n- 500: Server error"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Blog (Admin Only)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.test(\"Blog deleted successfully\", function() {",
+									"        pm.expect(response.message).to.include(\"deleted\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/blogs/{{blog_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blogs",
+								"{{blog_id}}"
+							]
+						},
+						"description": "Delete a blog post (Admin only).\n\n**Headers:**\n- Authorization: Bearer {token}\n\n**Access:** Admin only\n\n**Response:**\n- 200: Blog deleted successfully\n- 401: Unauthorized\n- 403: Forbidden (not admin)\n- 404: Blog not found\n- 500: Server error"
+					},
+					"response": []
+				}
+			],
+			"description": "Blog management endpoints for CRUD operations."
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
